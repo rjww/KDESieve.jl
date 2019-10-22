@@ -1,13 +1,13 @@
-struct KDEComparator{T₁ <: KernelDensity.UnivariateKDE,
-                     T₂ <: KernelDensity.UnivariateKDE}
+struct Comparator{T₁ <: KernelDensity.UnivariateKDE,
+                  T₂ <: KernelDensity.UnivariateKDE}
     pdf₁::KernelDensity.InterpKDE{T₁}
     pdf₂::KernelDensity.InterpKDE{T₂}
 
-    function KDEComparator(samples::T₁,
-                           targets::T₂,
-                           weights::T₃) where {T₁ <: AbstractMatrix,
-                                               T₂ <: AbstractVector,
-                                               T₃ <: AbstractVector}
+    function Comparator(samples::T₁,
+                        targets::T₂,
+                        weights::T₃) where {T₁ <: AbstractMatrix,
+                                            T₂ <: AbstractVector,
+                                            T₃ <: AbstractVector}
         X = samples
         t = targets
         w = weights
@@ -40,5 +40,5 @@ struct KDEComparator{T₁ <: KernelDensity.UnivariateKDE,
     end
 end
 
-(kde::KDEComparator)(x::T) where {T <: Number} = (Distributions.pdf(kde.pdf₁, x) -
-                                                  Distributions.pdf(kde.pdf₂, x))
+(c::Comparator)(x::T) where {T <: Number} = (Distributions.pdf(c.pdf₁, x) -
+                                             Distributions.pdf(c.pdf₂, x))

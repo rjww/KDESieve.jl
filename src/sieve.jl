@@ -4,12 +4,12 @@ struct Sieve{T₁ <: Number}
     head::SieveLayer{T₁}
 
     function Sieve{T₁}(samples::T₂,
-                          targets::T₃,
-                          n_projections::Int;
-                          max_layers::Int = 3,
-                          min_split::Int = 2) where {T₁ <: Number,
-                                                     T₂ <: AbstractMatrix,
-                                                     T₃ <: AbstractVector}
+                       targets::T₃,
+                       n_projections::Int;
+                       max_layers::Int = 3,
+                       min_split::Int = 2) where {T₁ <: Number,
+                                                  T₂ <: AbstractMatrix,
+                                                  T₃ <: AbstractVector}
         X = samples
         t = targets
         L = n_projections
@@ -26,8 +26,9 @@ struct Sieve{T₁ <: Number}
     end
 end
 
-function predict(sieve::T₁, samples::T₂) where {T₁ <: Sieve,
-                                                T₂ <: AbstractMatrix}
+function predict(sieve::T₁,
+                 samples::T₂) where {T₁ <: Sieve,
+                                     T₂ <: AbstractMatrix}
     param(::Sieve{T}) where {T} = T
 
     X = samples

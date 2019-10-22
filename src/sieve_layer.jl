@@ -1,24 +1,24 @@
 struct SieveLayer{T₁ <: Number}
     weights::Matrix{T₁}
-    comparators::Vector{KDEComparator}
+    comparators::Vector{Comparator}
     next::Union{SieveLayer{T₁},Nothing}
 
     function SieveLayer{T₁}(samples::T₂,
-                               targets::T₃,
-                               n_projections::Int,
-                               remaining_depth::Int,
-                               min_split::Int) where {T₁ <: Number,
-                                                      T₂ <: AbstractMatrix,
-                                                      T₃ <: AbstractVector}
+                            targets::T₃,
+                            n_projections::Int,
+                            remaining_depth::Int,
+                            min_split::Int) where {T₁ <: Number,
+                                                   T₂ <: AbstractMatrix,
+                                                   T₃ <: AbstractVector}
         X = samples
         t = targets
         L = n_projections
         D, N = size(X)
 
         # Initialize the random weights to the layer W, then instantiate a
-        # KDEComparator for each random projection vector, a row in W.
+        # Comparator for each random projection vector, a row in W.
         W = gaussian_projection_matrix(T₁, L, D)
-        comparators = [KDEComparator(X, t, W[l,:]) for l in 1:L]
+        comparators = [Comparator(X, t, W[l,:]) for l in 1:L]
 
         # Calculate the set of random projections H of X onto W, then apply the
         # corresponding comparator across each set of projected values, giving a
