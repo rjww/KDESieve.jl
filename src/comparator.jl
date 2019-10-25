@@ -16,8 +16,8 @@ struct Comparator{T₁ <: KernelDensity.UnivariateKDE,
         # Separate the random projections by label.
         # TODO Perhaps make more robust by deriving (binary) values from t,
         # rather than assuming they'll always be 1 and not-1.
-        h₀ = h[t .== 1]
-        h₁ = h[t .!= 1]
+        h₀ = h[t .!= 1]
+        h₁ = h[t .== 1]
 
         # Set lower and upper bounds on the bandwidth of the KDEs, with some
         # allowance for interpolating values that will fall outside the range of
